@@ -28,6 +28,7 @@ async def post_artigo(artigo: ArtigoSchema, usuario_logado: UsuarioModel = Depen
 
     return novo_artigo
 
+
 # GET artigos
 @router.get('/', response_model=List[ArtigoSchema])
 async def get_artigos(db: AsyncSession = Depends(get_session)):

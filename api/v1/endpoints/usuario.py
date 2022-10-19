@@ -16,8 +16,12 @@ from schemas.usuario_schema import (UsuarioSchemaArtigos,
 from core.deps import get_current_user, get_session
 from core.security import gerar_hash_senha
 from core.auth import autenticar, criar_token_acesso
+from core.send_email import SendEmail
+
 
 router = APIRouter()
+
+send_email = SendEmail()
 
 
 # GET usuario Logado
@@ -29,17 +33,23 @@ def get_logado(usuario_logado: UsuarioModel = Depends(get_current_user)):
 # POST / Singup
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuarioSchemaBase)
 async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)):
+    
     novo_usuario: UsuarioModel = UsuarioModel(nome=usuario.nome, sobrenome=usuario.sobrenome,
                                               email=usuario.email, senha=gerar_hash_senha(usuario.senha), eh_admin=usuario.eh_admin)
     async with db as session:
         try:
             session.add(novo_usuario)
             await session.commit()
-
+            
+            send_email.enviar_email(email=usuario.email, 
+                                    title_email='Cadastro efetuado com sucesso.', 
+                                    body='Seu cadastro foi efetudo com sucesso, Faça seu login na pagina: https://xcapitalbank.com.br/trade/app/'
+                                    )
             return novo_usuario
         except IntegrityError:
             raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
                                 detail='Já existe um usuário com este email cadastrado.')
+
 
 # GET usuários
 @router.get('/', response_model=List[UsuarioSchemaBase])
