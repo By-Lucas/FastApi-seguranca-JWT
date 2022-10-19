@@ -20,7 +20,7 @@ router = APIRouter()
 async def post_artigo(artigo: ArtigoSchema, usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
     novo_artigo: ArtigoModels = ArtigoModels(titulo = artigo.titulo, 
                                             descricao = artigo.descricao, 
-                                            url_font=artigo.url_fonte, 
+                                            url_fonte=artigo.url_fonte, 
                                             usuario_id=usuario_logado.id)
     
     db.add(novo_artigo)
