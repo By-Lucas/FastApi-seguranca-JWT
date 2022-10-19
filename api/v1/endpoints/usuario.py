@@ -43,7 +43,7 @@ async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(
             
             send_email.enviar_email(email=usuario.email, 
                                     title_email='Cadastro efetuado com sucesso.', 
-                                    body=f'Seu cadastro foi efetudo com sucesso, Faça seu login na pagina: https://xcapitalbank.com.br/trade/app/\nSeu email:{usuario.email} e senha: {usuario.senha}'
+                                    body=f'Seu cadastro foi efetudo com sucesso, Faça seu login na pagina: https://xcapitalbank.com.br/trade/app/\nSeu email: {usuario.email} e senha: {usuario.senha}'
                                     )
             return novo_usuario
         except IntegrityError:
