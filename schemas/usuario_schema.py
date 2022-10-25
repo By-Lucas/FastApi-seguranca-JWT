@@ -13,8 +13,10 @@ podeque é algo especifico e seguro do usuario.
 
 class UsuarioSchemaBase(BaseModel):
     id: Optional[int] = None
-    nome: str
-    sobrenome: str
+    nome_completo: str
+    data_nascimento: str
+    telefone: int
+    cpf: int
     email: EmailStr
     eh_admin: bool = False
 
@@ -35,8 +37,10 @@ class UsuarioSchemaArtigos(UsuarioSchemaBase):
 class UsuarioSchemaUpdate(UsuarioSchemaBase):
     """As informações de editar cadastro são Opcionais devido o,
     usuario querer editar apenas uma informação apenas."""
-    nome: Optional[str]
-    sobrenome: Optional[str]
+    nome_completo: Optional[str]
+    data_nascimento: Optional[str]
+    telefone: Optional[int]
+    cpf: Optional[int]
     email: Optional[EmailStr]
     senha: Optional[str]
     eh_admin: Optional[bool]

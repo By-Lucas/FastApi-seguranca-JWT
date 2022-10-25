@@ -13,3 +13,16 @@ class ArtigoModels(settings.DBBaseModel):
     url_fonte = Column(String(256))
     usuario_id = Column(Integer, ForeignKey('usuario.id'))
     criador = relationship("UsuarioModel", back_populates='artigos', lazy='joined')
+
+
+class CadastroXcapital(settings.DBBaseModel):
+    __tablename__ = 'xcapital'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nome_completo = Column(String(256))
+    data_nacimento = Column(String(50))
+    email = Column(String(256))
+    telefone = Column(Integer)
+    cpf = Column(Integer)
+    usuario_id = Column(Integer, ForeignKey('usuario.id'))
+    criador = relationship("UsuarioModel", back_populates='xcapital', lazy='joined')

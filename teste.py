@@ -22,10 +22,7 @@ class ApiXcapital:
 
         response = requests.post(f'{self.reqUrl}/login', data=payload,  headers=self.headersList)
 
-        print(response.status_code)
-        
         if response.status_code == 200:
-            print(response.json()["access_token"])
             return response.json()["access_token"]
         else:
             return 'Alguma credencial foi digitada incorretamente'
@@ -42,8 +39,6 @@ class ApiXcapital:
 
         response = requests.request("GET", f'{self.reqUrl}/logado', data=payload,  headers=header)
         
-        print(response.status_code)
-
         if response.status_code == 200:
             return response.json()
         else:

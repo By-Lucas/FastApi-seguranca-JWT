@@ -34,8 +34,8 @@ def get_logado(usuario_logado: UsuarioModel = Depends(get_current_user)):
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuarioSchemaBase)
 async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)):
     
-    novo_usuario: UsuarioModel = UsuarioModel(nome=usuario.nome, sobrenome=usuario.sobrenome,
-                                              email=usuario.email, senha=gerar_hash_senha(usuario.senha), eh_admin=usuario.eh_admin)
+    novo_usuario: UsuarioModel = UsuarioModel(nome=usuario.nome_completo, sobrenome=usuario.data_nascimento, telefone=usuario.telefone,
+                                              cpf=usuario.cpf, email=usuario.email, senha=gerar_hash_senha(usuario.senha), eh_admin=usuario.eh_admin)
     async with db as session:
         try:
             session.add(novo_usuario)
@@ -85,10 +85,14 @@ async def update_usuario(usuario_id: int, usuario: UsuarioSchemaUpdate, db: Asyn
         usuario_update: UsuarioSchemaBase = result.scalars().unique().one_or_none()
 
         if usuario_update:
-            if usuario.nome:
-                usuario_update.nome = usuario.nome
-            if usuario.sobrenome:
-                usuario_update.sobrenome = usuario.sobrenome
+            if usuario.nome_completo:
+                usuario_update.nome_completo = usuario.nome_completo
+            if usuario.data_nascimento:
+                usuario_update.data_nascimento = usuario.data_nascimento
+            if usuario.telefone:
+                usuario_update.telefone = usuario.telefone
+            if usuario.cpf:
+                usuario_update.cpf = usuario.cpf
             if usuario.email:
                 usuario_update.email = usuario.email
             if usuario.eh_admin:
