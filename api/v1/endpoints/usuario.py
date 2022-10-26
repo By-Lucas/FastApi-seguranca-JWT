@@ -34,7 +34,7 @@ def get_logado(usuario_logado: UsuarioModel = Depends(get_current_user)):
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuarioSchemaBase)
 async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)):
     
-    novo_usuario: UsuarioModel = UsuarioModel(nome=usuario.nome_completo, sobrenome=usuario.data_nascimento, telefone=usuario.telefone,
+    novo_usuario: UsuarioModel = UsuarioModel(nome_completo=usuario.nome_completo, data_nascimento=usuario.data_nascimento, telefone=usuario.telefone,
                                               cpf=usuario.cpf, email=usuario.email, senha=gerar_hash_senha(usuario.senha), eh_admin=usuario.eh_admin)
     async with db as session:
         try:

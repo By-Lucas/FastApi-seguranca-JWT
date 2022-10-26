@@ -15,8 +15,8 @@ class UsuarioSchemaBase(BaseModel):
     id: Optional[int] = None
     nome_completo: str
     data_nascimento: str
-    telefone: int
-    cpf: int
+    telefone: str
+    cpf: str
     email: EmailStr
     eh_admin: bool = False
 
